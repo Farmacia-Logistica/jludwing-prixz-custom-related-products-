@@ -1,0 +1,45 @@
+.pcrp-carousel-container {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+}
+
+.pcrp-carousel-inner {
+    display: flex;
+}
+
+.pcrp-carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.pcrp-carousel-item {
+    flex: 0 0 10%; 
+    padding: 0rem;
+}
+
+.pcrp-img {
+    width: 100%;
+    height: auto;
+}
+
+.pcrp-prev,
+.pcrp-next {
+    position: absolute;
+    top: 90%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1;
+}
+
+.pcrp-prev {
+    left: 0;
+}
+
+.pcrp-next {
+    right: 0;
+}

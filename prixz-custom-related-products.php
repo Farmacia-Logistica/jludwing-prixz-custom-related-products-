@@ -3,7 +3,7 @@
 Plugin Name: Prixz Custom Related Products
 Description: Muestra productos relacionados obtenidos de una API interna debajo del producto.
 Version: 1.0
-Author: Woo Team
+Author: Prixz Woo Team
 */
 
 // Evitar el acceso directo al archivo.
@@ -16,7 +16,8 @@ add_action('woocommerce_after_single_product_summary', 'prixz_custom_related_pro
 
 function prixz_custom_related_products_container()
 {
-    echo '<div id="prixz-custom-related-products-container" style="margin-top:25px;"></div>'; // Contenedor donde se cargarán los productos relacionados
+    echo '<h2 class="woorelated-title" style="display:block;margin-top:25px;"> Productos Relacionados </h2>';
+    echo '<div id="prixz-custom-related-products-container" style="margin-top: 25px; width: 95%; overflow: hidden;margin: 0 auto; "></div>'; // Contenedor donde se cargarán los productos relacionados
 }
 
 // Engancharse en el gancho 'wp_enqueue_scripts' para cargar el script solo en la página del producto actual
@@ -34,6 +35,9 @@ function prixz_enqueue_scripts()
         'ajax_url' => admin_url('admin-ajax.php'),
         'product_id' => $product_id,
     ));
+
+    wp_enqueue_style( 'style', plugin_dir_url(__FILE__) . 'style.css' );
+
 }
 
 
@@ -81,27 +85,6 @@ function prixz_get_related_products()
         'include' => $related_product_ids,
     ));
 
-    ob_start();
-
-    // Generar el HTML de los productos relacionados
-    echo '<div class="woo-related-products-container ">';
-    echo '	<h2 class="woorelated-title" style="display:block;"> Productos Relacionados </h2>';
-    echo '	<div class="products">';
-    echo '		<div class="flex flex-fluid">';
-    
-    foreach ( $related_products as $related_product ) {
-        $post_object = get_post( $related_product->get_id() );
-        setup_postdata( $GLOBALS['post'] =& $post_object );
-        wc_get_template_part( 'content', 'product' );
-    }
-    
-    echo '		</div>';
-    echo '	</div>';
-    echo '</div>';
-
-    wp_reset_postdata();
-
-    $html = ob_get_clean();
-    wp_send_json_success($html); // Enviar el HTML generado
+    include 'prixz-related-products-template.php';
 }
 ?>
