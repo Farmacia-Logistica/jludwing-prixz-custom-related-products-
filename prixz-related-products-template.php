@@ -17,10 +17,9 @@ ob_start();
             </div>
         </div>
     </div>
-    <button class="pcrp-prev">&#10094;</button>
-    <button class="pcrp-next">&#10095;</button>
 </div>
-
+<button class="pcrp-prev">&#10094;</button>
+<button class="pcrp-next">&#10095;</button>
 
 <?php
 $html = ob_get_clean();
