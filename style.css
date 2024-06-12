@@ -32,7 +32,7 @@
 .pcrp-prev,
 .pcrp-next {
     position: absolute;
-    top: 50%; /* Centrar verticalmente */
+    top: 47%; /* Centrar verticalmente */
     transform: translateY(-50%); /* Ajuste para centrar */
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
