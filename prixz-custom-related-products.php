@@ -12,11 +12,11 @@ if (!defined('ABSPATH')) {
 }
 
 // Añadir el contenedor para los productos relacionados a la página del producto
-add_action('woocommerce_after_single_product_summary', 'prixz_custom_related_products_container', 20);
+add_action('woocommerce_after_single_product_summary', 'prixz_custom_related_products_container', 10);
 
 function prixz_custom_related_products_container()
 {
-    echo '<h2 class="woorelated-title" style="display:block;margin-top:25px;"> Productos Relacionados </h2>';
+    echo '<h2 class="woorelated-title" style="display:block;margin-top:25px;"> Comprados juntos habitualmente </h2>';
     echo '<div id="prixz-custom-related-products-container" style="margin-top: 25px; width: 95%; overflow: hidden;margin: 0 auto; "></div>'; // Contenedor donde se cargarán los productos relacionados
 }
 
