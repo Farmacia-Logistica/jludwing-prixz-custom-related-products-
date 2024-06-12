@@ -26,7 +26,7 @@
 .pcrp-prev,
 .pcrp-next {
     position: absolute;
-    top: 60%;
+    top: 40%;
     transform: translateY(-50%);
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
@@ -49,4 +49,8 @@
     .pcrp-next {
         top: 70%;
     }
+}
+
+.pcrp-col-md-3 {
+    padding: 0;
 }
