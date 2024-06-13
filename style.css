@@ -32,14 +32,15 @@
 .pcrp-prev,
 .pcrp-next {
     position: absolute;
-    top: 50%; /* Centrar verticalmente */
-    transform: translateY(-50%); /* Ajuste para centrar */
+    /*top: 45%; /* Centrar verticalmente */
+    transform: translateY(-400%); /* Ajuste para centrar */
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
     cursor: pointer;
     padding: 10px;
     z-index: 1;
+    margin-top: -100px;
 }
 
 .pcrp-prev {
