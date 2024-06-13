@@ -17,7 +17,7 @@ add_action('woocommerce_after_single_product_summary', 'prixz_custom_related_pro
 function prixz_custom_related_products_container()
 {
     echo '<h2 class="woorelated-title" style="display:block;margin-top:25px;"> Comprados juntos habitualmente </h2>';
-    echo '<div id="prixz-custom-related-products-container" style="padding-bottom: 400px;"></div>'; // Contenedor donde se cargarán los productos relacionados
+    echo '<div id="prixz-custom-related-products-container"></div>'; // Contenedor donde se cargarán los productos relacionados
 }
 
 // Ejecutar hook para cargar scripts solo si la pagina actual es producto 
@@ -107,7 +107,7 @@ function prixz_get_related_products() {
     $related_products = array_filter($related_products, function($product) {
         return $product->is_in_stock();
     });
-    
+
     include 'prixz-related-products-template.php';
 }
 ?>
