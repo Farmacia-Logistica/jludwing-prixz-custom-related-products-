@@ -52,7 +52,7 @@ function prixz_get_related_products()
     }
 
     $product_id = intval($_POST['product_id']);
-    $api_url = sprintf('%s/wp-json/wc-product-info/v1/product/%d', get_site_url(), $product_id);
+    $api_url = sprintf('%s/wp-json/wc-product-info-bought-together/v1/product/%d', get_site_url(), $product_id);
 
     // Hacer la solicitud GET a la API interna
     $response = wp_remote_get($api_url);
