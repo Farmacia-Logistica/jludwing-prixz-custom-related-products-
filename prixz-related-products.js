@@ -19,8 +19,8 @@ jQuery(document).ready(function($) {
             }
 
             $('#prixz-custom-related-products-container').html(response.data);
-            // Re-inicializar los scripts de WooCommerce después de cargar el contenido
-            initWooCommerceScripts();
+            // Re-enlazar eventos de clic en los botones "Agregar al carrito"
+            bindAddToCartEvents();
 
             const carousel = document.querySelector('.pcrp-carousel');
             const prevButton = document.querySelector('.pcrp-prev');
@@ -76,19 +76,19 @@ jQuery(document).ready(function($) {
         }, 550);
     }
 
-    function initWooCommerceScripts() {
-        // Re-enlazar eventos de WooCommerce para agregar al carrito
-        $( document.body ).trigger( 'wc_fragment_refresh' );
-        // Forzar la actualización de scripts de WooCommerce
-        if (typeof wc_add_to_cart_variation_params !== 'undefined') {
-            $('.variations_form').each(function() {
-                $(this).wc_variation_form();
+    function bindAddToCartEvents() {
+        $(".button-addToCart-home").off('click').on('click', function() {
+            var myId = this.id;
+            $.post('/wp-admin/admin-ajax.php', {
+                action: 'add_to_cart_home',
+                id_product_card: myId
+            }, function(response) {
+                $(document.body).trigger('wc_fragment_refresh');
+                $(".cfw-side-cart-floating-button").click();
             });
-        }
-        if (typeof $.fn.wc_add_to_cart !== 'undefined') {
-            $('.single_add_to_cart_button').each(function() {
-                $(this).wc_add_to_cart();
-            });
-        }
+        });
     }
+
+    // Inicializar la función al cargar la página
+    bindAddToCartEvents();
 });
