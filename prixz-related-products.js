@@ -78,17 +78,15 @@ jQuery(document).ready(function($) {
 
     function bindAddToCartEvents() {
         $(".button-addToCart-home").off('click').on('click', function() {
-            var myId = this.id;
+            var productID = this.id;
             $.post('/wp-admin/admin-ajax.php', {
                 action: 'add_to_cart_home',
-                id_product_card: myId
+                id_product_card: productID
             }, function(response) {
                 $(document.body).trigger('wc_fragment_refresh');
                 $(".cfw-side-cart-floating-button").click();
             });
         });
     }
-
-    // Inicializar la función al cargar la página
     bindAddToCartEvents();
 });
