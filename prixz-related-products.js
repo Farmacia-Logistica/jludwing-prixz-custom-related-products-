@@ -1,6 +1,7 @@
 jQuery(document).ready(function($) {
     var product_id = prixz_ajax.product_id;
     var ajax_url = prixz_ajax.ajax_url;
+
     if (!ajax_url || !product_id) {
         return; // Si no hay URL de AJAX o ID de producto, no hacemos nada
     }
@@ -18,6 +19,9 @@ jQuery(document).ready(function($) {
             }
 
             $('#prixz-custom-related-products-container').html(response.data);
+            // Re-inicializar los scripts de WooCommerce después de cargar el contenido
+            $( document.body ).trigger( 'wc_fragment_refresh' );
+
             const carousel = document.querySelector('.pcrp-carousel');
             const prevButton = document.querySelector('.pcrp-prev');
             const nextButton = document.querySelector('.pcrp-next');
@@ -49,7 +53,6 @@ jQuery(document).ready(function($) {
             });
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            error_l
         }
     });
 
