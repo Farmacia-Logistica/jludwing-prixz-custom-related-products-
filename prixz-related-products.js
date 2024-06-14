@@ -20,7 +20,7 @@ jQuery(document).ready(function($) {
 
             $('#prixz-custom-related-products-container').html(response.data);
             // Re-inicializar los scripts de WooCommerce después de cargar el contenido
-            $( document.body ).trigger( 'wc_fragment_refresh' );
+            initWooCommerceScripts();
 
             const carousel = document.querySelector('.pcrp-carousel');
             const prevButton = document.querySelector('.pcrp-prev');
@@ -74,5 +74,21 @@ jQuery(document).ready(function($) {
         setTimeout(() => {
             carousel.style.transition = 'transform 0.5s ease';
         }, 550);
+    }
+
+    function initWooCommerceScripts() {
+        // Re-enlazar eventos de WooCommerce para agregar al carrito
+        $( document.body ).trigger( 'wc_fragment_refresh' );
+        // Forzar la actualización de scripts de WooCommerce
+        if (typeof wc_add_to_cart_variation_params !== 'undefined') {
+            $('.variations_form').each(function() {
+                $(this).wc_variation_form();
+            });
+        }
+        if (typeof $.fn.wc_add_to_cart !== 'undefined') {
+            $('.single_add_to_cart_button').each(function() {
+                $(this).wc_add_to_cart();
+            });
+        }
     }
 });
