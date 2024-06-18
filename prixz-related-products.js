@@ -37,22 +37,18 @@ jQuery(document).ready(function($) {
 
             // Evento de clic en botón siguiente
             nextButton.addEventListener('click', () => {
-                if (counter < itemCount - 4) {
+                if (counter < itemCount - 4) { // Cambiado a itemCount - 4 para limitar el avance
                     counter++;
-                } else {
-                    counter = 0; // Reiniciar el contador
+                    carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                 }
-                carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
             });
 
             // Evento de clic en botón anterior
             prevButton.addEventListener('click', () => {
                 if (counter > 0) {
                     counter--;
-                } else {
-                    counter = itemCount - 4; // Retroceder al último conjunto de elementos
+                    carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                 }
-                carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
             });
 
             // Verificar si el ancho de la ventana es menor o igual a 768px (tabletas)
@@ -62,10 +58,11 @@ jQuery(document).ready(function($) {
                     event.preventDefault(); // Evitar el scroll predeterminado
                     if (event.deltaY > 0 && counter < itemCount - 4) { // Avanzar solo si no estamos en el último elemento
                         counter++;
+                        carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                     } else if (event.deltaY < 0 && counter > 0) { // Retroceder solo si no estamos en el primer elemento
                         counter--;
+                        carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                     }
-                    carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                 });
 
                 // Variables para manejo de eventos touch
@@ -83,10 +80,11 @@ jQuery(document).ready(function($) {
                 carousel.addEventListener('touchend', () => {
                     if (touchEndX < touchStartX && counter < itemCount - 4) { // Avanzar solo si no estamos en el último elemento
                         counter++;
+                        carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                     } else if (touchEndX > touchStartX && counter > 0) { // Retroceder solo si no estamos en el primer elemento
                         counter--;
+                        carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                     }
-                    carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                 });
             }
         },
