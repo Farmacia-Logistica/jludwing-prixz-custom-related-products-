@@ -100,12 +100,14 @@ function prixz_get_related_products() {
     // Obtener los productos relacionados de WooCommerce
     $related_products = wc_get_products(array(
         'include' => $related_product_ids,
-        'stock_status' => 'instock' // Solo productos en stock
+        'stock_status' => 'instock', // Solo productos en stock
     ));
 
-    // Doble verificación: filtrar productos válidos, en stock y publicados
+    /// Doble verificación: filtrar productos válidos, en stock, publicados y visibles
     $related_products = array_filter($related_products, function($product) {
-        return $product && $product->is_in_stock() && $product->get_status() === 'publish';
+        return $product 
+            && $product->get_status() === 'publish'
+            && $product->get_catalog_visibility() !== 'hidden';
     });
 
 
