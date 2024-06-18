@@ -103,9 +103,9 @@ function prixz_get_related_products() {
         'stock_status' => 'instock' // Solo productos en stock
     ));
 
-    // Doble verificacion, filtrar manualmente
+    // Doble verificación: filtrar productos válidos y en stock
     $related_products = array_filter($related_products, function($product) {
-        return $product->is_in_stock();
+        return $product && $product->is_in_stock();
     });
 
     include 'prixz-related-products-template.php';
