@@ -103,10 +103,11 @@ function prixz_get_related_products() {
         'stock_status' => 'instock' // Solo productos en stock
     ));
 
-    // Doble verificación: filtrar productos válidos y en stock
+    // Doble verificación: filtrar productos válidos, en stock y publicados
     $related_products = array_filter($related_products, function($product) {
-        return $product && $product->is_in_stock();
+        return $product && $product->is_in_stock() && $product->get_status() === 'publish';
     });
+
 
     include 'prixz-related-products-template.php';
 }
