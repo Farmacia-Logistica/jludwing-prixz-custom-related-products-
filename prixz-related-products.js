@@ -36,6 +36,7 @@ jQuery(document).ready(function($) {
                 nextButton.style.display = 'none';
             }
 
+            // Eventos de clic en botones de navegación
             nextButton.addEventListener('click', () => {
                 counter++;
                 carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
@@ -51,8 +52,41 @@ jQuery(document).ready(function($) {
                     carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                 }
             });
+
+            // Verificar si el ancho de la ventana es menor o igual a 768px (tabletas)
+            if (window.innerWidth <= 768) {
+                // Evento de desplazamiento con el ratón (scroll)
+                carousel.addEventListener('wheel', (event) => {
+                    if (event.deltaY > 0) {
+                        nextButton.click();
+                    } else {
+                        prevButton.click();
+                    }
+                });
+
+                // Variables para manejo de eventos touch
+                let touchStartX = 0;
+                let touchEndX = 0;
+
+                carousel.addEventListener('touchstart', (event) => {
+                    touchStartX = event.changedTouches[0].screenX;
+                });
+
+                carousel.addEventListener('touchmove', (event) => {
+                    touchEndX = event.changedTouches[0].screenX;
+                });
+
+                carousel.addEventListener('touchend', () => {
+                    if (touchEndX < touchStartX) {
+                        nextButton.click();
+                    } else if (touchEndX > touchStartX) {
+                        prevButton.click();
+                    }
+                });
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            // Manejo de errores
         }
     });
 
