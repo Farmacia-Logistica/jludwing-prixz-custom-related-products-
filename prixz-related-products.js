@@ -95,12 +95,12 @@ jQuery(document).ready(function($) {
 
     function getStepPercentage(windowWidth) {
         if (windowWidth <= 425) {
-            return 80; // Avance para dispositivos móviles
+            return 70; // Avance para dispositivos móviles
         }
         if (windowWidth <= 768) {
             return 50; // Avance para tabletas
         }
-        return 25; // Avance predeterminado para dispositivos grandes
+        return 35; // Avance predeterminado para dispositivos grandes
     }
 
     function bindAddToCartEvents() {
