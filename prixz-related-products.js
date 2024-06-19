@@ -25,9 +25,8 @@ jQuery(document).ready(function($) {
             const carousel = document.querySelector('.pcrp-carousel');
             const prevButton = document.querySelector('.pcrp-prev');
             const nextButton = document.querySelector('.pcrp-next');
-            
-            let counter = 0;
             const itemCount = document.querySelectorAll('.pcrp-carousel-item').length;
+            let counter = 0;
             let stepPercentage = getStepPercentage(window.innerWidth);
 
             // Ocultar las flechas si hay 4 o menos productos
@@ -36,16 +35,15 @@ jQuery(document).ready(function($) {
                 nextButton.style.display = 'none';
             }
 
-            // Eventos de clic en botones de navegación
+            // Evento de clic en botón siguiente
             nextButton.addEventListener('click', () => {
-                counter++;
-                carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
-                if (counter === itemCount - 3) {
-                    resetCarousel(carousel, counter, stepPercentage);
-                    counter = 0;
+                if (counter < itemCount - 4) { // Cambiado a itemCount - 4 para limitar el avance
+                    counter++;
+                    carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                 }
             });
-            
+
+            // Evento de clic en botón anterior
             prevButton.addEventListener('click', () => {
                 if (counter > 0) {
                     counter--;
@@ -57,10 +55,13 @@ jQuery(document).ready(function($) {
             if (window.innerWidth <= 768) {
                 // Evento de desplazamiento con el ratón (scroll)
                 carousel.addEventListener('wheel', (event) => {
-                    if (event.deltaY > 0) {
-                        nextButton.click();
-                    } else {
-                        prevButton.click();
+                    event.preventDefault(); // Evitar el scroll predeterminado
+                    if (event.deltaY > 0 && counter < itemCount - 4) { // Avanzar solo si no estamos en el último elemento
+                        counter++;
+                        carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
+                    } else if (event.deltaY < 0 && counter > 0) { // Retroceder solo si no estamos en el primer elemento
+                        counter--;
+                        carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                     }
                 });
 
@@ -77,10 +78,12 @@ jQuery(document).ready(function($) {
                 });
 
                 carousel.addEventListener('touchend', () => {
-                    if (touchEndX < touchStartX) {
-                        nextButton.click();
-                    } else if (touchEndX > touchStartX) {
-                        prevButton.click();
+                    if (touchEndX < touchStartX && counter < itemCount - 4) { // Avanzar solo si no estamos en el último elemento
+                        counter++;
+                        carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
+                    } else if (touchEndX > touchStartX && counter > 0) { // Retroceder solo si no estamos en el primer elemento
+                        counter--;
+                        carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                     }
                 });
             }
@@ -98,16 +101,6 @@ jQuery(document).ready(function($) {
             return 50; // Avance para tabletas
         }
         return 25; // Avance predeterminado para dispositivos grandes
-    }
-
-    function resetCarousel(carousel, counter, stepPercentage) {
-        setTimeout(() => {
-            carousel.style.transition = 'transform 0.5s ease';
-            carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
-        }, 500);
-        setTimeout(() => {
-            carousel.style.transition = 'transform 0.5s ease';
-        }, 550);
     }
 
     function bindAddToCartEvents() {
