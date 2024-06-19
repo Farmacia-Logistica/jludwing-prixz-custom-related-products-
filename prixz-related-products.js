@@ -39,8 +39,11 @@ jQuery(document).ready(function($) {
             nextButton.addEventListener('click', () => {
                 if (counter < itemCount - 4) { // Cambiado a itemCount - 4 para limitar el avance
                     counter++;
-                    carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
+                } else {
+                    counter = 0; // Reiniciar el contador
                 }
+                    carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
+                
             });
 
             // Evento de clic en botón anterior
@@ -94,11 +97,8 @@ jQuery(document).ready(function($) {
     });
 
     function getStepPercentage(windowWidth) {
-        if (windowWidth <= 425) {
-            return 70; // Avance para dispositivos móviles
-        }
-        if (windowWidth <= 768) {
-            return 50; // Avance para tabletas
+        if (windowWidth <=425) {
+            return 80; // Avance para moviles
         }
         return 35; // Avance predeterminado para dispositivos grandes
     }
