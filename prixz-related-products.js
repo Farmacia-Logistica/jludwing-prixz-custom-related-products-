@@ -32,7 +32,7 @@ jQuery(document).ready(function($) {
             // Ocultar las flechas si hay 4 o menos productos
             if (itemCount <= 4) {
                 //prevButton.style.display = 'none';
-                nextButton.style.display = 'none';
+                //nextButton.style.display = 'none';
             }
 
             // Evento de clic en botón siguiente
