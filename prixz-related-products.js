@@ -24,7 +24,7 @@ jQuery(document).ready(function($) {
 
             const carousel = document.querySelector('.pcrp-carousel');
             const carouselContainer = document.querySelector('.pcrp-carousel-inner');
-            const carouselContainerItem = document.querySelector('.pcrp-carousel-item');
+            const carouselItems = document.querySelectorAll('.pcrp-carousel-item');
             const prevButton = document.querySelector('.pcrp-prev');
             const nextButton = document.querySelector('.pcrp-next');
             const itemCount = document.querySelectorAll('.pcrp-carousel-item').length;
@@ -40,7 +40,11 @@ jQuery(document).ready(function($) {
                 if (itemCount <= 4) {
                     prevButton.style.display = 'block';
                     nextButton.style.display = 'block';
-                    carouselContainerItem.style.width = '50%';
+                    // Aplicar el estilo de ancho a cada elemento del carrusel
+                    carouselItems.forEach((item) => {
+                        item.style.width = '50%';
+                    });
+
                 }
             }
             // Evento de clic en botón siguiente
