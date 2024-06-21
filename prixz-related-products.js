@@ -44,6 +44,16 @@ jQuery(document).ready(function($) {
                     carouselItems.forEach((item) => {
                         item.style.width = '50%';
                     });
+                }
+
+                // Ocultar las flechas si hay 4 o menos productos
+                if (itemCount <= 1) {
+                    prevButton.style.display = 'none';
+                    nextButton.style.display = 'none';
+                    // Aplicar el estilo de ancho a cada elemento del carrusel
+                    carouselItems.forEach((item) => {
+                        item.style.width = '100%';
+                    });
 
                 }
             }
