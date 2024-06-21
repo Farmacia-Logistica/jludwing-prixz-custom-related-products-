@@ -110,7 +110,7 @@ jQuery(document).ready(function($) {
 
     function getStepPercentage(windowWidth) {
         if (windowWidth <=425) {
-            return 78; // Avance para moviles
+            return 75; // Avance para moviles
         }
         return 35; // Avance predeterminado para dispositivos grandes
     }
