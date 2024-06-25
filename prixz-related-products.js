@@ -35,6 +35,16 @@ jQuery(document).ready(function($) {
                 prevButton.style.display = 'none';
                 nextButton.style.display = 'none';
             }
+
+            if (itemCount <= 2) {
+                prevButton.style.display = 'none';
+                nextButton.style.display = 'none';
+                // Aplicar el estilo de ancho a cada elemento del carrusel
+                carouselItems.forEach((item) => {
+                    item.style.width = '100%';
+                });
+
+            }
             if (window.innerWidth <= 768) {
                 // Ocultar las flechas si hay 4 o menos productos
                 if (itemCount <= 4) {
@@ -46,13 +56,13 @@ jQuery(document).ready(function($) {
                     });
                 }
 
-                // Ocultar las flechas si hay 4 o menos productos
-                if (itemCount <= 1) {
+                // Ocultar las flechas si hay 2 o menos productos
+                if (itemCount <= 2) {
                     prevButton.style.display = 'none';
                     nextButton.style.display = 'none';
                     // Aplicar el estilo de ancho a cada elemento del carrusel
                     carouselItems.forEach((item) => {
-                        item.style.width = '100%';
+                        item.style.width = '90%';
                     });
 
                 }
