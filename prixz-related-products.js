@@ -63,6 +63,7 @@ jQuery(document).ready(function($) {
                     // Aplicar el estilo de ancho a cada elemento del carrusel
                     carouselItems.forEach((item) => {
                         item.style.width = '90%';
+                        item.style.padding = '0.3rem';
                     });
 
                 }
