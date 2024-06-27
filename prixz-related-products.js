@@ -23,21 +23,54 @@ jQuery(document).ready(function($) {
             bindAddToCartEvents();
 
             const carousel = document.querySelector('.pcrp-carousel');
+            const carouselContainer = document.querySelector('.pcrp-carousel-inner');
+            const carouselItems = document.querySelectorAll('.pcrp-carousel-item');
             const prevButton = document.querySelector('.pcrp-prev');
             const nextButton = document.querySelector('.pcrp-next');
             const itemCount = document.querySelectorAll('.pcrp-carousel-item').length;
             let counter = 0;
             let stepPercentage = getStepPercentage(window.innerWidth);
 
-            // Ocultar las flechas si hay 4 o menos productos
             if (itemCount <= 4) {
                 prevButton.style.display = 'none';
                 nextButton.style.display = 'none';
             }
 
+            if (itemCount <= 2) {
+                prevButton.style.display = 'none';
+                nextButton.style.display = 'none';
+                // Aplicar el estilo de ancho a cada elemento del carrusel
+                carouselItems.forEach((item) => {
+                    item.style.width = '100%';
+                });
+
+            }
+            if (window.innerWidth <= 768) {
+                // Ocultar las flechas si hay 4 o menos productos
+                if (itemCount <= 4) {
+                    prevButton.style.display = 'block';
+                    nextButton.style.display = 'block';
+                    // Aplicar el estilo de ancho a cada elemento del carrusel
+                    carouselItems.forEach((item) => {
+                        item.style.width = '50%';
+                    });
+                }
+
+                // Ocultar las flechas si hay 2 o menos productos
+                if (itemCount <= 2) {
+                    prevButton.style.display = 'none';
+                    nextButton.style.display = 'none';
+                    // Aplicar el estilo de ancho a cada elemento del carrusel
+                    carouselItems.forEach((item) => {
+                        item.style.width = '90%';
+                        item.style.padding = '0.3rem';
+                    });
+
+                }
+            }
             // Evento de clic en botón siguiente
             nextButton.addEventListener('click', () => {
-                if (counter < itemCount - 4) { // Cambiado a itemCount - 4 para limitar el avance
+                if (counter < itemCount - 2) { // Cambiado a itemCount - 4 para limitar el avance
                     counter++;
                 } else {
                     counter = 0; // Reiniciar el contador
@@ -59,7 +92,7 @@ jQuery(document).ready(function($) {
                 // Evento de desplazamiento con el ratón (scroll)
                 carousel.addEventListener('wheel', (event) => {
                     event.preventDefault(); // Evitar el scroll predeterminado
-                    if (event.deltaY > 0 && counter < itemCount - 4) { // Avanzar solo si no estamos en el último elemento
+                    if (event.deltaY > 0 && counter < itemCount - 2) { // Avanzar solo si no estamos en el último elemento
                         counter++;
                         carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                     } else if (event.deltaY < 0 && counter > 0) { // Retroceder solo si no estamos en el primer elemento
@@ -81,7 +114,7 @@ jQuery(document).ready(function($) {
                 });
 
                 carousel.addEventListener('touchend', () => {
-                    if (touchEndX < touchStartX && counter < itemCount - 4) { // Avanzar solo si no estamos en el último elemento
+                    if (touchEndX < touchStartX && counter < itemCount - 2) { // Avanzar solo si no estamos en el último elemento
                         counter++;
                         carousel.style.transform = `translateX(${-counter * stepPercentage}%)`;
                     } else if (touchEndX > touchStartX && counter > 0) { // Retroceder solo si no estamos en el primer elemento
@@ -98,7 +131,7 @@ jQuery(document).ready(function($) {
 
     function getStepPercentage(windowWidth) {
         if (windowWidth <=425) {
-            return 80; // Avance para moviles
+            return 68; // Avance para moviles
         }
         return 35; // Avance predeterminado para dispositivos grandes
     }
