@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
                     nextButton.style.display = 'block';
                     // Aplicar el estilo de ancho a cada elemento del carrusel
                     carouselItems.forEach((item) => {
-                        item.style.width = '15%';
+                        item.style.width = '25%';
                     });
                 }
 
