@@ -66,7 +66,7 @@ jQuery(document).ready(function($) {
                     // Aplicar el estilo de ancho a cada elemento del carrusel
                     carouselItems.forEach((item) => {
                         item.style.width = '25%';
-                        item.style.marginLeft = '40px';
+                        carouselContainer.style.marginLeft = '40px';
                     });
                 }
 
