@@ -34,6 +34,9 @@ jQuery(document).ready(function($) {
             if (itemCount <= 4) {
                 prevButton.style.display = 'none';
                 nextButton.style.display = 'none';
+                carouselItems.forEach((item) => {
+                    item.style.width = '50%';
+                });
             }
 
             if (itemCount <= 2) {
