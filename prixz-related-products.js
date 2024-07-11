@@ -49,13 +49,23 @@ jQuery(document).ready(function($) {
 
             }
             if (window.innerWidth <= 768) {
-                // Ocultar las flechas si hay 4 o menos productos
-                if (itemCount <= 4) {
+                // Ocultar las flechas si hay 4 productos
+                if (itemCount == 4) {
                     prevButton.style.display = 'block';
                     nextButton.style.display = 'block';
                     // Aplicar el estilo de ancho a cada elemento del carrusel
                     carouselItems.forEach((item) => {
                         item.style.width = '50%';
+                    });
+                }
+
+                // Ocultar las flechas si hay 3 productos
+                if (itemCount == 3) {
+                    prevButton.style.display = 'block';
+                    nextButton.style.display = 'block';
+                    // Aplicar el estilo de ancho a cada elemento del carrusel
+                    carouselItems.forEach((item) => {
+                        item.style.width = '15%';
                     });
                 }
 
