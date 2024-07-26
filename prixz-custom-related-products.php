@@ -16,7 +16,7 @@ add_action('woocommerce_after_single_product_summary', 'prixz_custom_related_pro
 
 function prixz_custom_related_products_container()
 {
-    echo '<h2 class="woorelated-title" style="display:block;margin-top:25px;"> Comprados juntos habitualmente </h2>';
+    echo '<h2 class="woorelated-title" style="display:block;margin-top:25px;"> También puedes comprar </h2>';
     echo '<div id="prixz-custom-related-products-container"></div>'; // Contenedor donde se cargarán los productos relacionados
 }
 
