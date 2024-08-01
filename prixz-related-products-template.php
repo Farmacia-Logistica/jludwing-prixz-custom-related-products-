@@ -11,14 +11,13 @@ ob_start();
                     <div class="pcrp-carousel-item">
                         <?php wc_get_template_part('content', 'product'); ?>
                     </div>
+                    <?php wp_reset_postdata(); // Importante para limpiar el postdata después del loop ?>
                 <?php endforeach; ?>
             </div>
         </div>
     </div>
-    <button class="pcrp-prev">&#10094;</button>
-    <button class="pcrp-next">&#10095;</button>
 </div>
 <?php
 $html = ob_get_clean();
-wp_send_json_success($html); // Enviar el HTML generado
+echo $html; // Imprimir el HTML generado directamente
 ?>

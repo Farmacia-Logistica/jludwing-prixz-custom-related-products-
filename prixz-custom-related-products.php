@@ -17,17 +17,13 @@ add_action('woocommerce_after_single_product_summary', 'prixz_custom_related_pro
 function prixz_custom_related_products_container()
 {
     echo '<h2 class="woorelated-title" style="display:block;margin-top:25px;"> También puedes comprar </h2>';
-    echo '<div id="prixz-custom-related-products-container"></div>'; // Contenedor donde se cargarán los productos relacionados
+    echo '<div id="prixz-custom-related-products-container">';
+    prixz_display_related_products();
+    echo '</div>'; // Contenedor donde se cargarán los productos relacionados
 }
 
-// Ejecutar hook para cargar scripts solo si la pagina actual es producto 
-add_action('woocommerce_before_single_product', 'prixz_enqueue_scripts');
-
-function prixz_enqueue_scripts() {
-    if (!is_product()) {
-        return;
-    }
-
+// Cargar y mostrar los productos relacionados directamente
+function prixz_display_related_products() {
     global $product;
 
     if (!is_object($product) || !$product->get_id()) {
@@ -35,54 +31,22 @@ function prixz_enqueue_scripts() {
     }
 
     $product_id = $product->get_id();
-
-    wp_enqueue_script(
-        'prixz-related-products', 
-        plugin_dir_url(__FILE__) . 'prixz-related-products.js', 
-        array('jquery'), 
-        '0.0.1', 
-        true
-    );
-
-    wp_localize_script('prixz-related-products', 'prixz_ajax', array(
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'product_id' => $product_id,
-    ));
-
-    wp_enqueue_style(
-        'prixz-style', 
-        plugin_dir_url(__FILE__) . 'style.css', 
-        array(), 
-        '0.0.1'
-    );
-}
-
-
-
-// Manejar la solicitud AJAX
-add_action('wp_ajax_nopriv_prixz_get_related_products', 'prixz_get_related_products');
-add_action('wp_ajax_prixz_get_related_products', 'prixz_get_related_products');
-
-function prixz_get_related_products() {
-    if (!isset($_POST['product_id'])) {
-        wp_send_json_error('No product_id in POST request');
-    }
-
-    $product_id = intval($_POST['product_id']);
     $api_url = sprintf('%s/wp-json/wc-product-info-bought-together/v1/product/%d', get_site_url(), $product_id);
 
     // Hacer la solicitud GET a la API interna
     $response = wp_remote_get($api_url);
 
     if (is_wp_error($response)) {
-        wp_send_json_error('WP_Error: ' . $response->get_error_message());
+        echo 'Error: ' . $response->get_error_message();
+        return;
     }
 
     $body = wp_remote_retrieve_body($response);
     $data = json_decode($body, true);
 
     if (!$data || !isset($data['payload']) || !is_array($data['payload'])) {
-        wp_send_json_error('Invalid API response');
+        echo 'Invalid API response';
+        return;
     }
 
     $related_product_ids = array();
@@ -103,14 +67,30 @@ function prixz_get_related_products() {
         'stock_status' => 'instock', // Solo productos en stock
     ));
 
-    /// Doble verificación: filtrar productos válidos, en stock, publicados y visibles
+    // Doble verificación: filtrar productos válidos, en stock, publicados y visibles
     $related_products = array_filter($related_products, function($product) {
-        return $product 
+        return $product
             && $product->get_status() === 'publish'
             && $product->get_catalog_visibility() !== 'hidden';
     });
 
-
-    include 'prixz-related-products-template.php';
+    if (!empty($related_products)) {
+        include 'prixz-related-products-template.php';
+    }
 }
-?>
+
+// Añadir estilos y scripts si es necesario
+add_action('woocommerce_before_single_product', 'prixz_enqueue_scripts');
+
+function prixz_enqueue_scripts() {
+    if (!is_product()) {
+        return;
+    }
+
+    wp_enqueue_style(
+        'prixz-style',
+        plugin_dir_url(__FILE__) . 'style.css',
+        array(),
+        '0.0.1'
+    );
+}
