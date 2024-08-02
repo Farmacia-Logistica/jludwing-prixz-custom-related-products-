@@ -8,7 +8,7 @@ Author: Prixz Woo Team
 
 // Evitar el acceso directo al archivo.
 if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
+    exit;
 }
 
 // Añadir el contenedor para los productos relacionados a la página del producto
@@ -19,7 +19,7 @@ function prixz_custom_related_products_container()
     echo '<h2 class="woorelated-title" style="display:block;margin-top:25px;"> También puedes comprar </h2>';
     echo '<div id="prixz-custom-related-products-container">';
     prixz_display_related_products();
-    echo '</div>'; // Contenedor donde se cargarán los productos relacionados
+    echo '</div>';
 }
 
 // Cargar y mostrar los productos relacionados directamente
@@ -31,11 +31,23 @@ function prixz_display_related_products() {
     }
 
     $product_id = $product->get_id();
+
+    $transient_key = 'prixz_related_products_' . $product_id;  // Clave única para el transient
+
+    // Intentar recuperar los productos relacionados desde el transient
+    $related_products = get_transient($transient_key);
+
+    // Verifica si los productos están ya almacenados en el transient
+    if ($related_products !== false) {
+        if (!empty($related_products)) {
+            include 'prixz-related-products-template.php';
+            return;
+        }
+    }
+
+
     $api_url = sprintf('%s/wp-json/wc-product-info-bought-together/v1/product/%d', get_site_url(), $product_id);
-
-    // Hacer la solicitud GET a la API interna
     $response = wp_remote_get($api_url);
-
     if (is_wp_error($response)) {
         echo 'Error: ' . $response->get_error_message();
         return;
@@ -43,7 +55,6 @@ function prixz_display_related_products() {
 
     $body = wp_remote_retrieve_body($response);
     $data = json_decode($body, true);
-
     if (!$data || !isset($data['payload']) || !is_array($data['payload'])) {
         echo 'Invalid API response';
         return;
@@ -58,13 +69,12 @@ function prixz_display_related_products() {
         }
     }
 
-    // Limitar a 8 productos relacionados
-    $related_product_ids = array_slice($related_product_ids, 0, 8);
+    $related_product_ids = array_slice($related_product_ids, 0, 4);
 
-    // Obtener los productos relacionados de WooCommerce
+    // Obtener los productos relacionados de WooCommerce Solo productos en stock
     $related_products = wc_get_products(array(
         'include' => $related_product_ids,
-        'stock_status' => 'instock', // Solo productos en stock
+        'stock_status' => 'instock',
     ));
 
     // Doble verificación: filtrar productos válidos, en stock, publicados y visibles
@@ -74,12 +84,14 @@ function prixz_display_related_products() {
             && $product->get_catalog_visibility() !== 'hidden';
     });
 
+    // Guardar los productos relacionados en un transient por un día
+    set_transient($transient_key, $related_products, DAY_IN_SECONDS);
+
     if (!empty($related_products)) {
         include 'prixz-related-products-template.php';
     }
 }
 
-// Añadir estilos y scripts si es necesario
 add_action('woocommerce_before_single_product', 'prixz_enqueue_scripts');
 
 function prixz_enqueue_scripts() {
