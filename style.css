@@ -1,84 +1,65 @@
 #prixz-custom-related-products-container {
     margin: auto;
     width: 100%;
-    margin-left: -25px;
-    overflow: hidden;
+    overflow: visible; /* Permite que los elementos como los botones de navegación sean visibles fuera del contenedor */
 }
 
 .pcrp-carousel-container {
     position: relative;
     max-width: 100%;
     display: flex;
-    /*margin: auto;*/
-}
-
-.pcrp-carousel-arrows {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
+    overflow: hidden; /* Esconde cualquier elemento que se desborde del contenedor */
 }
 
 .pcrp-carousel {
-    transition: transform 0.5s ease;
+    width: 100%; /* Utiliza todo el ancho disponible del contenedor */
 }
 
 .pcrp-carousel-inner {
     display: flex;
-    row-gap: 12px;
+    align-items: center;
+    position: relative; /* Añadido para manejar mejor la posición absoluta de los botones */
 }
 
 .pcrp-carousel-item {
+    flex: 0 0 25%; /* Cada ítem ocupa exactamente el 25% del espacio disponible */
     padding: 1.7rem;
-    width: 25%;
+    box-sizing: border-box; /* Asegura que el padding y border están incluidos en el ancho definido */
 }
 
-.pcrp-img {
-    width: 100%;
-    height: auto;
-}
-
-.pcrp-prev,
-.pcrp-next {
+.pcrp-prev, .pcrp-next {
     position: absolute;
-    /*top: 45%; /* Centrar verticalmente */
-    transform: translateY(-400%); /* Ajuste para centrar */
-    background-color: rgba(0, 0, 0, 0.5);
+    top: 50%;
+    transform: translateY(-50%); /* Centra los botones verticalmente */
+    z-index: 1000; /* Asegura que están sobre cualquier otro elemento */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para visibilidad */
     color: white;
     border: none;
     cursor: pointer;
-    padding: 10px;
-    z-index: 1;
-    margin-top: -100px;
+    padding: 10px 20px; /* Tamaño de botón ajustable */
+    font-size: 24px; /* Tamaño de icono visible */
 }
 
 .pcrp-prev {
-    left: 0;
+    left: 10px; /* Posición desde el lado izquierdo */
 }
 
 .pcrp-next {
-    right: 0;
-}
-
-.pcrp-col-md-3 {
-    padding: 0%;
+    right: 10px; /* Posición desde el lado derecho */
 }
 
 @media (max-width: 767px) {
-    .pcrp-col-md-3 {
-        padding: 0;
-    }
-
-    .products .product {
-        width: 100% !important;
+    .pcrp-carousel-item {
+        flex: 0 0 50%; /* Cada ítem ocupa el 50% en pantallas medianas */
     }
 }
 
 @media (max-width: 475px) {
-    #prixz-custom-related-products-container {
-        margin-left: 0px;
-    }
     .pcrp-carousel-item {
-        padding: 1rem;
-        width: 15%;
+        flex: 0 0 100%; /* Cada ítem ocupa el 100% en dispositivos móviles */
+    }
+    .pcrp-prev, .pcrp-next {
+        font-size: 18px; /* Reduce el tamaño de los botones en pantallas pequeñas */
+        padding: 8px 16px; /* Reduce el padding en pantallas pequeñas */
     }
 }
