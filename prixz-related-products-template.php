@@ -1,7 +1,7 @@
 <?php
 ob_start();
 ?>
-<div class="owl-carousel owl-theme">
+<div class="products owl-carousel owl-theme">
     <?php foreach ($related_products as $related_product) : ?>
         <?php $post_object = get_post($related_product->get_id()); ?>
         <?php setup_postdata($GLOBALS['post'] =& $post_object); ?>
@@ -31,10 +31,13 @@ echo $html;
                 0: {
                     items: 1
                 },
-                600: {
+                360: {
+                    items: 2
+                },
+                1010: {
                     items: 3
                 },
-                1000: {
+                1150: {
                     items: 4
                 }
             }

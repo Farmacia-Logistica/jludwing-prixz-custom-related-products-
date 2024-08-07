@@ -61,7 +61,7 @@ function prixz_display_related_products($max_products = 8) {
         echo 'Invalid API response';
         return;
     }
-
+    //var_dump($data);
     $related_product_ids = array();
 
     foreach ($data['payload'] as $related_product) {
@@ -70,7 +70,7 @@ function prixz_display_related_products($max_products = 8) {
         }
     }
 
-    $related_product_ids = array_slice($related_product_ids, 0, $max_products);
+    //$related_product_ids = array_slice($related_product_ids, 0, $max_products); 
 
     $related_products = wc_get_products(array(
         'include' => $related_product_ids,
