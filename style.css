@@ -33,7 +33,7 @@
 }
 
 .owl-next {
-    right: -5px; /* Ajusta esta posición según sea necesario */
+    right: -10px; /* Ajusta esta posición según sea necesario */
 }
 
 .owl-prev:hover, .owl-next:hover {
@@ -108,6 +108,10 @@
 #prixz-custom-related-products-container .products .product-wrapper {
     min-width: 250px ;
 }
+#content-wrapper #woorelated-title-id{
+    display:block;
+    margin-top:25px;
+}
 @media (max-width: 767px) {
     .pcrp-carousel-item {
         flex: 0 0 50%; /* Cada ítem ocupa el 50% en pantallas medianas */
@@ -160,6 +164,9 @@
     }
     #prixz-custom-related-products-container .products .product-wrapper {
         min-width: 167px ;
+    }
+    #content-wrapper #woorelated-title-id.woorelated-title{
+        font-size: 20px;
     }
     
 }

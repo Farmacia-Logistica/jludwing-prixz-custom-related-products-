@@ -16,9 +16,11 @@ add_action('woocommerce_after_single_product_summary', 'prixz_custom_related_pro
 
 function prixz_custom_related_products_container()
 {
-    echo '<h2 class="woorelated-title" style="display:block;margin-top:25px;"> También puedes comprar </h2>';
+    echo '<h2 id="woorelated-title-id" class="woorelated-title" > También puedes comprar </h2>';
     echo '<div id="prixz-custom-related-products-container">';
-    prixz_display_related_products();
+    if(empty(prixz_display_related_products())){
+        echo '<style> .woorelated-title{ display:none; } </style>';
+    };
     echo '</div>';
 }
 
