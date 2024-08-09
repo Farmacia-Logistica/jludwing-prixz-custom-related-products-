@@ -14,6 +14,7 @@ ob_start();
 <?php
 $html = ob_get_clean();
 echo $html;
+$product_count = count($related_products);
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
@@ -23,8 +24,11 @@ echo $html;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script>
     jQuery(document).ready(function(){
+        var productCount = <?php echo $product_count; ?>;
+        console.log("cuantos: ", productCount);
+        let loopStatus = productCount >= 3? true : false; 
         jQuery(".owl-carousel").owlCarousel({
-            loop: true,
+            loop: loopStatus,
             margin: 10,
             nav: true,
             responsive: {
